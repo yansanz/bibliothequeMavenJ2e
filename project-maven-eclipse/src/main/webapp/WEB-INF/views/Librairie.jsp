@@ -19,7 +19,9 @@
 	<div id="tablBord">
 		<fieldset id="tbLib">
 			<div id="btnMode">
-				<fieldset id="zoneInfoLib">
+			<a href="<c:url value ="/Acceuil"/>"><input class="btn"
+						id="btnRetour" type="button" value="Acceuil"></a> 
+				<fieldset id="zoneInfo">
 					<legend id="legend">INFO</legend>
 					${infoBul}
 				</fieldset>
@@ -36,6 +38,13 @@
 			<br>
 			<div id="zonRechBook">
 				<h3>Livre</h3>
+				<a href="<c:url value ="/Acceuil/Librairie"/>"><input class="btn"
+					 type="button" value="Titre"></a>
+					<a href="<c:url value ="/Acceuil/LibrairieA"/>"><input class="btn"
+				 type="button" value="Auteur"></a>
+				 <a href="<c:url value ="/Acceuil/LibrairieG"/>"><input class="btn"
+					 type="button" value="Genre"></a>
+					
 			</div>
 			<div id="zonCiblBook">
 

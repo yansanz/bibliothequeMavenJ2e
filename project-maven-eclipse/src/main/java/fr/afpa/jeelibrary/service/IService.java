@@ -27,6 +27,10 @@ public interface IService {
 	
 	public void modifierLivre(Book b);
 	
+	public ArrayList<Book> RechTitreG();
+	
+	public ArrayList<Book> RechTitreA();
+	
 	public String getIsbn(int idCopy);
 	
 	public Boolean dispoCopy(int idCopy);

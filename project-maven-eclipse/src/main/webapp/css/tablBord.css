@@ -89,12 +89,16 @@ h1 {
 	border-color: black;
 	border-radius: 20px;
 }
+h3{
+	color: lightYellow; background-color: lightBlue;width :30%;
+}
 
 #zoneInfo {
 	width: 30%;
 	margin-left: 65%;
 	background-color: lightYellow;
 	margin-top: -5%;
+	height: 50px;
 }
 
 #zonCibl {
@@ -105,14 +109,14 @@ h1 {
 }
 
 #zonCiblSub {
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color:lightGrey;
 	height: 150px;
-	width: 65%;
+	width: 45%;
 	overflow-y: scroll;
 }
 
 #zonCiblBook {
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: lightGrey;
 	height: 250px;
 	width: 65%;
 	overflow-y: scroll;

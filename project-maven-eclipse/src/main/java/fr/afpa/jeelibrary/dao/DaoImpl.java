@@ -248,7 +248,7 @@ public class DaoImpl implements IDao {
 
 			String query = "select _livre.ISBN , _livre.Titre_livre, _livre.Sous_titre,_livre.Nbre_exemplaire, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
 					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
-					+ " and _livre.ISBN= _ecrit.ISBN and _livre.Titre_livre = '" + name + "';";
+					+ " and _livre.ISBN= _ecrit.ISBN and _livre.Titre_livre = '" + name + "'order by _livre.Titre_livre;";
 			result = statement.executeQuery(query);
 			ArrayList<Book> livre = new ArrayList<Book>();
 			while (result.next()) {
@@ -284,7 +284,77 @@ public class DaoImpl implements IDao {
 
 			String query = "select _livre.ISBN , _livre.Titre_livre, _livre.Sous_titre,_livre.Nbre_exemplaire, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
 					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
-					+ " and _livre.ISBN= _ecrit.ISBN";
+					+ " and _livre.ISBN= _ecrit.ISBN order by _livre.Titre_livre" ;
+			result = statement.executeQuery(query);
+			ArrayList<Book> livre = new ArrayList<Book>();
+			while (result.next()) {
+				String Isbn = result.getString("ISBN");
+				String Titre = result.getString("Titre_livre");
+				String sousTitre = result.getString("Sous_titre");
+				int nbrCopy = Integer.valueOf((String) result.getString("Nbre_exemplaire")).intValue();
+				Author Auteur = new Author(result.getString("nom"), result.getString("prenom"),
+						Integer.parseInt(result.getString("Annee_naissance")));
+				String genre = result.getString("_livre.nom_collection");
+				Book b = new Book(Isbn, Titre, sousTitre, Auteur, genre, nbrCopy);
+				livre.add(b);
+
+			}
+			statement.close();
+			connection.close();
+			return livre;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	public ArrayList<Book> RechTitreA() {
+		try {
+			connection = DriverManager.getConnection(url, login, password);
+			statement = connection.createStatement();
+
+			// correspond à la requete sql
+
+			String query = "select _livre.ISBN , _livre.Titre_livre, _livre.Sous_titre,_livre.Nbre_exemplaire, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
+					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
+					+ " and _livre.ISBN= _ecrit.ISBN order by personne.nom" ;
+			result = statement.executeQuery(query);
+			ArrayList<Book> livre = new ArrayList<Book>();
+			while (result.next()) {
+				String Isbn = result.getString("ISBN");
+				String Titre = result.getString("Titre_livre");
+				String sousTitre = result.getString("Sous_titre");
+				int nbrCopy = Integer.valueOf((String) result.getString("Nbre_exemplaire")).intValue();
+				Author Auteur = new Author(result.getString("nom"), result.getString("prenom"),
+						Integer.parseInt(result.getString("Annee_naissance")));
+				String genre = result.getString("_livre.nom_collection");
+				Book b = new Book(Isbn, Titre, sousTitre, Auteur, genre, nbrCopy);
+				livre.add(b);
+
+			}
+			statement.close();
+			connection.close();
+			return livre;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	public ArrayList<Book> RechTitreG() {
+		try {
+			connection = DriverManager.getConnection(url, login, password);
+			statement = connection.createStatement();
+
+			// correspond à la requete sql
+
+			String query = "select _livre.ISBN , _livre.Titre_livre, _livre.Sous_titre,_livre.Nbre_exemplaire, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
+					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
+					+ " and _livre.ISBN= _ecrit.ISBN order by _livre.nom_collection" ;
 			result = statement.executeQuery(query);
 			ArrayList<Book> livre = new ArrayList<Book>();
 			while (result.next()) {
@@ -412,7 +482,7 @@ public class DaoImpl implements IDao {
 
 			String query = "select _livre.ISBN , _livre.Titre_livre,_livre.Nbre_exemplaire, _livre.Sous_titre, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
 					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
-					+ " and _livre.ISBN= _ecrit.ISBN and  personne.nom = '" + auteur + "';";
+					+ " and _livre.ISBN= _ecrit.ISBN and  personne.nom = '" + auteur + "'order by _livre.Titre_livre;";
 			result = statement.executeQuery(query);
 			ArrayList<Book> livre = new ArrayList<Book>();
 			System.out.println(livre);
@@ -449,7 +519,7 @@ public class DaoImpl implements IDao {
 
 			String query = "select _livre.ISBN , _livre.Titre_livre,_livre.Nbre_exemplaire, _livre.Sous_titre, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
 					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
-					+ " and _livre.ISBN= _ecrit.ISBN and  _livre.nom_collection = '" + genre + "';";
+					+ " and _livre.ISBN= _ecrit.ISBN and  _livre.nom_collection = '" + genre + "'order by _livre.Titre_livre;";
 			result = statement.executeQuery(query);
 			ArrayList<Book> livre = new ArrayList<Book>();
 			ArrayList<Book> books = new ArrayList<Book>();
@@ -730,7 +800,8 @@ public class DaoImpl implements IDao {
 
 			// correspond à la requete sql
 
-			String query = "select personne.nom, personne.prenom , personne.id_personne, _emprunteur.nbre_emprunt_en_cours from _emprunteur, personne where personne.id_personne = _emprunteur.id_personne";
+			String query = "select personne.nom, personne.prenom , personne.id_personne, _emprunteur.nbre_emprunt_en_cours"
+					+ " from _emprunteur, personne where personne.id_personne = _emprunteur.id_personne order by personne.nom";
 			result = statement.executeQuery(query);
 			ArrayList<Subscriber> emprunteur = new ArrayList<Subscriber>();
 			while (result.next()) {

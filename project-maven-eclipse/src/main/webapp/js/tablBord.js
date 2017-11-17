@@ -88,4 +88,5 @@ function getIdCopy(nb) {
 	document.getElementById('txtCibl5').value = nb;
 	document.getElementById('txtCibl7').value = nb;
 	document.getElementById('txtCibl10').value = nb;
+	document.getElementById('txtCibl13').value = nb;
 }

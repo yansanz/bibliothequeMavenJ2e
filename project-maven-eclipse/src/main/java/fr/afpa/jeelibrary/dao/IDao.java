@@ -24,6 +24,10 @@ public interface IDao {
 	
 	public void ajouterLivre(Book b);
 	
+	public ArrayList<Book> RechTitreG();
+	
+	public ArrayList<Book> RechTitreA();
+	
 	public void modifierLivre(Book b);
 	
 	public String getIsbn(int idCopy);

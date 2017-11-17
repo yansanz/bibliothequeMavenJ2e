@@ -84,6 +84,8 @@
 				<c:if test="${btnSuprCopy== null}">
 					<c:set var="mode" value="${modeInf}" />
 					<c:if test="${modeInf!= null}">
+					<input class="btn" id="btnRetour" type="button" value="Restituer"
+							onclick="document.retourCopy.submit()">
 						<input class="btn" id="btnplus" type="button" value="+"
 							onclick="document.addCopy.submit()">
 						<input class="btn" id="btnMoins" type="button" value="-"
@@ -174,6 +176,13 @@
 				method="get">
 				<input id="txtCibl9" placeholder="cible1" name="txtCibl9"
 					value="${isbn}" type="hidden" size="20">
+			</form>
+			<form name="retourCopy" action="<c:url value='/Acceuil/ReturnInfoCopy'/>"
+				method="get">
+				<input id="txtCibl12" placeholder="cible1" name="txtCibl12"
+					value="${idSub}" type="hidden" size="20">
+					<input id="txtCibl13" placeholder="cible1" name="txtCibl13"
+					value="" type="hidden" size="20">
 			</form>
 			<form name="infoValid" action="<c:url value='/Acceuil/infoValid'/>"
 				method="get">

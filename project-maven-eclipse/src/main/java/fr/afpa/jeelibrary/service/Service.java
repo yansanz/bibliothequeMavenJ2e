@@ -30,6 +30,12 @@ private IDao dao;
 	public String getIsbn(int idCopy) {
 		return dao.getIsbn(idCopy);
 	}
+	public ArrayList<Book> RechTitreG(){
+		return dao.RechTitreG();
+	}
+	public ArrayList<Book> RechTitreA(){
+		return dao.RechTitreA();
+	}
 	public void modifierLivre(Book b) {
 		dao.modifierLivre(b);
 	}
