@@ -8,15 +8,16 @@
 <table border="1" id="iTable">
 	<c:forEach var="mySub" items="${emprunteur}">
 		<tr>
+		<td><input onchange="getId(${mySub.id})" type="radio"
+				id="iChoixSub" name="choixSub" value="${mySub.id}"></td>
 			<td><c:out value="${mySub.lastName}" /></td>
 			<td><c:out value="${mySub.fisrtName}" /></td>
 			<td><c:set var="emprunt" /> <c:if test="${mySub.nbrEmprunt > 0}">
 					<c:out value="emprunt en cours" />
 				</c:if> <c:if test="${mySub.nbrEmprunt == 0}">
-					<c:out value="pas d 'emprunt" />
+					<c:out value="pas d'emprunt" />
 				</c:if></td>
-			<td><input onchange="getId(${mySub.id})" type="radio"
-				id="iChoixSub" name="choixSub" value="${mySub.id}">
+			
 		</tr>
 	</c:forEach>
 </table>

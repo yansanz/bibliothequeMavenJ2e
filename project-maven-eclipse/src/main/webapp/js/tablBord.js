@@ -49,6 +49,7 @@ function rechercheDonnee(){
 		
 	}
 }
+// function AJAX 
 function majIHM(){
 	
 	if (requete.readyState == 4) {
@@ -60,27 +61,30 @@ function majIHM(){
 				document.getElementById('iTable').style.visibility ='hidden';
 				select.innerHTML="";
 			for (var i = 0; i <reponse.length; i++){
-			
 			      var opt = document.createElement('tr');
 			      var tdLastName = document.createElement('td');
 			      var tdFirstName =   document.createElement('td');
 			      var tdEmprunt   = document.createElement('td');
-			     
-			      var radioButton ='<td><input type="radio" name="choixSub" value="'+reponse[i].id+'" onchange="getId(reponse[i].id)"></td>';
-			      var tdRadioButton = document.createElement('radioButton')
+			      var tdRadioButton = document.createElement('td');
+  			      var radioInput = document.createElement('input');
+			      radioInput.setAttribute('type','radio');
+			      radioInput.setAttribute('name','choixSub');
+			      radioInput.setAttribute('value',reponse[i].id);
+			      radioInput.setAttribute('onchange','getId('+reponse[i].id+')');
+			         tdRadioButton.appendChild(radioInput);
 			      opt.appendChild(tdRadioButton);
 			      opt.appendChild(tdLastName);
 			      tdLastName.innerHTML = reponse[i].lastName;
-		      
 		      opt.appendChild(tdFirstName);
 		      tdFirstName.innerHTML = reponse[i].fisrtName;
 		      opt.appendChild(tdEmprunt);
-		      tdEmprunt.innerHTML = reponse[i].nbrEmprunt;
-			      console.log("boucle");
+		      if (reponse[i].nbrEmprunt>0){
+		      tdEmprunt.innerHTML = "emprunt en cours";
+		      }else{
+		    	  tdEmprunt.innerHTML = "pas d'emprunt";
+		      }
 			      opt.value = reponse[i].id;
 				 select.appendChild(opt);
-
-				 
 			}
 			}else{
 				document.getElementById('iTable').style.visibility ='visible';
