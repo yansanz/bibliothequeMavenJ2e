@@ -26,6 +26,71 @@ window.onclick = function(event) {
 		modal.style.display = "none";
 	}
 }
+
+var requete;
+
+function rechercheDonnee(){
+	var donnees = document.getElementById("donnees");
+	var url = "search?valeur=" +escape(donnees.value);
+	if (window.XMLHttpRequest){
+		requete = new XMLHttpRequest();
+		requete.open("GET",url,true);
+		requete.onreadystatechange = majIHM;
+		requete.send(null);
+	}else if (window.ActiveXObject){
+		requete = new ActiveXObject("Microsoft.XMLHTTP");
+		if(requete){
+			requete.open("GET",url,true);
+			requete.onreadystatechange = majIHM;
+			requete.send();
+		}
+		}else{
+			alert("le navigateur ne supporte pas cette techno")
+		
+	}
+}
+function majIHM(){
+	
+	if (requete.readyState == 4) {
+		
+		if (requete.status == 200) {
+			var reponse = JSON.parse(requete.responseText);
+			var select = document.getElementById('tableSub');
+			if (reponse.length !=0){
+				document.getElementById('iTable').style.visibility ='hidden';
+				select.innerHTML="";
+			for (var i = 0; i <reponse.length; i++){
+			
+			      var opt = document.createElement('tr');
+			      var tdLastName = document.createElement('td');
+			      var tdFirstName =   document.createElement('td');
+			      var tdEmprunt   = document.createElement('td');
+			     
+			      var radioButton ='<td><input type="radio" name="choixSub" value="'+reponse[i].id+'" onchange="getId(reponse[i].id)"></td>';
+			      var tdRadioButton = document.createElement('radioButton')
+			      opt.appendChild(tdRadioButton);
+			      opt.appendChild(tdLastName);
+			      tdLastName.innerHTML = reponse[i].lastName;
+		      
+		      opt.appendChild(tdFirstName);
+		      tdFirstName.innerHTML = reponse[i].fisrtName;
+		      opt.appendChild(tdEmprunt);
+		      tdEmprunt.innerHTML = reponse[i].nbrEmprunt;
+			      console.log("boucle");
+			      opt.value = reponse[i].id;
+				 select.appendChild(opt);
+
+				 
+			}
+			}else{
+				document.getElementById('iTable').style.visibility ='visible';
+			}
+		} else {
+		alert('Une erreur est survenue lors de la mise à jour de la page.'+
+		'\n\nCode retour = '+requete.statusText);   
+		}
+	}
+}
 function choixAdd(n) {
 	if (n == 1) {
 		document.getElementById('txtCibl7').value = "sub";

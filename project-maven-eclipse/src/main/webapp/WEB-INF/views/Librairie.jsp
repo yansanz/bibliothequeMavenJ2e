@@ -29,6 +29,7 @@
 
 			<div id="zonRechSub">
 				<h3>Emprunteur</h3>
+				<input type="search" placeholder="recherche" id="donnees" name="donees" size="30" onkeyup="rechercheDonnee();">
 			</div>
 			<div id="zonCiblSub">
 
@@ -38,11 +39,11 @@
 			<br>
 			<div id="zonRechBook">
 				<h3>Livre</h3>
-				<a href="<c:url value ="/Acceuil/Librairie"/>"><input class="btn"
+				<a href="<c:url value ="/Acceuil/Librairie"/>"><input class="btn2"
 					 type="button" value="Titre"></a>
-					<a href="<c:url value ="/Acceuil/LibrairieA"/>"><input class="btn"
+					<a href="<c:url value ="/Acceuil/LibrairieA"/>"><input class="btn2"
 				 type="button" value="Auteur"></a>
-				 <a href="<c:url value ="/Acceuil/LibrairieG"/>"><input class="btn"
+				 <a href="<c:url value ="/Acceuil/LibrairieG"/>"><input class="btn2"
 					 type="button" value="Genre"></a>
 					
 			</div>

@@ -27,6 +27,8 @@ public interface IService {
 	
 	public void modifierLivre(Book b);
 	
+	public int getNbreExactEmpruntparSub(int id);
+	
 	public ArrayList<Book> RechTitreG();
 	
 	public ArrayList<Book> RechTitreA();

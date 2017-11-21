@@ -860,8 +860,8 @@ public class DaoImpl implements IDao {
 			// correspond à la requete sql
 
 			String query = "select personne.nom, personne.prenom , personne.id_personne, _emprunteur.nbre_emprunt_en_cours  "
-					+ "from _emprunteur, personne where personne.id_personne = _emprunteur.id_personne and personne.nom = '"
-					+ name + "';";
+					+ "from _emprunteur, personne where personne.id_personne = _emprunteur.id_personne and personne.nom like  '%"
+					+ name + "%';";
 			result = statement.executeQuery(query);
 			ArrayList<Subscriber> emprunteur = new ArrayList<Subscriber>();
 			System.out.println(emprunteur);
@@ -938,6 +938,36 @@ public class DaoImpl implements IDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	public int getNbreExactEmpruntparSub(int id) {
+		 int nbExactEmprunt =0;
+		try {
+			
+			connection = DriverManager.getConnection(url, login, password);
+			statement = connection.createStatement();
+			System.out.println(id);
+			// correspond à la requete sql
+			String query = "select nbre_emprunt_en_cours, id_personne from _emprunteur "
+					+ "  where id_personne ='" + id + "';";
+			result = statement.executeQuery(query);
+			while (result.next()) {
+				  nbExactEmprunt = result.getInt("nbre_emprunt_en_cours");
+				
+				return nbExactEmprunt;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				// liberer les reesources.. memoire
+				statement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return nbExactEmprunt;
 	}
 
 	public Subscriber getOneEmprunteur(int id) {

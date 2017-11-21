@@ -30,6 +30,9 @@ private IDao dao;
 	public String getIsbn(int idCopy) {
 		return dao.getIsbn(idCopy);
 	}
+	public int getNbreExactEmpruntparSub(int id) {
+		return dao.getNbreExactEmpruntparSub(id);
+	}
 	public ArrayList<Book> RechTitreG(){
 		return dao.RechTitreG();
 	}

@@ -90,7 +90,7 @@ h1 {
 	border-radius: 20px;
 }
 h3{
-	color: lightYellow; background-color: lightBlue;width :30%;
+	color: lightYellow; background-color: lightBlue;width :30%;border: black 1px solid; text-align: center;
 }
 
 #zoneInfo {
@@ -167,7 +167,17 @@ h3{
 	background-color: rgba(0, 0, 255, 0.1);
 	width: 50%;
 }
-
+.btn2{
+	background-color: lightBlue;
+	width: 150px;
+	height: 25px;
+	padding: 5px;
+	border: solid black 1px;
+}
+.btn2:hover {
+	cursor: pointer;
+	background-color: lightYellow;
+}
 .btn {
 	background-color: lightBlue;
 	width: 150px;

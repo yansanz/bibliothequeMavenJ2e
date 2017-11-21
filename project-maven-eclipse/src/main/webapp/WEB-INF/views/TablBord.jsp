@@ -86,10 +86,12 @@
 					<c:if test="${modeInf!= null}">
 					<input class="btn" id="btnRetour" type="button" value="Restituer"
 							onclick="document.retourCopy.submit()">
+							<br>
 						<input class="btn" id="btnplus" type="button" value="+"
 							onclick="document.addCopy.submit()">
 						<input class="btn" id="btnMoins" type="button" value="-"
 							onclick="document.suprCopy.submit()">
+							<br>
 						<input class="btn" class="btn" type="button" value="Info"
 							onclick="document.infoValid.submit()">
 					</c:if>
@@ -121,7 +123,7 @@
 												<li class="list__item"><input type="radio"
 													class="radio-btn" name="choice" id="b-opt"
 													onclick="choixAdd(2);document.add.submit()" /> <label
-													for="b-opt" class="label">BOOK</label></li>
+													for="b-opt" class="label">LIVRE</label></li>
 
 											</ul>
 											<input id="txtCibl7" placeholder="cible7" name="txtCibl7"

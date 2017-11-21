@@ -26,6 +26,8 @@ public interface IDao {
 	
 	public ArrayList<Book> RechTitreG();
 	
+	public int getNbreExactEmpruntparSub(int id);
+	
 	public ArrayList<Book> RechTitreA();
 	
 	public void modifierLivre(Book b);

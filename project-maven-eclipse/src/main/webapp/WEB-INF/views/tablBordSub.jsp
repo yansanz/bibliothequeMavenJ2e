@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
-<table border="1">
+<table border="1" id="tableSub">
+</table>
+<table border="1" id="iTable">
 	<c:forEach var="mySub" items="${emprunteur}">
 		<tr>
 			<td><c:out value="${mySub.lastName}" /></td>

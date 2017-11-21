@@ -16,9 +16,12 @@
 	<div id="tablBord">
 		<fieldset id="tb">
 			<div id="btnMode">
-				<input id="btnSub" class="btn" type="button" value="Mode Emprunteur"
-					onclick="modeSub()"> <input id="btnLib" class="btn"
-					type="button" value="Mode Librairie" onclick="modeLibrary()">
+				<a
+					href="<c:url value ="/Acceuil/Librairie"/>"><input id="btnSub" class="btn" type="button" value="Mode Emprunteur"
+					onclick="modeSub()"></a>
+					 <a
+					href="<c:url value ="/Acceuil/Librairie"/>"><input id="btnLib"
+					class="btn" type="button" value="Mode Librairie"></a>
 				<input id="btnBook" class="btn" type="button" value="Mode Book"
 					onclick="modeBook()">
 				<fieldset id="zoneInfo">
