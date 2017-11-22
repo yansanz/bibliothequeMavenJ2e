@@ -107,12 +107,23 @@ h3{
 	width: 65%;
 	overflow-y: scroll;
 }
-
+#TableBook{
+	width : 100%;
+}
+#bookTable{
+	width : 100%;
+}
+#iTablCopy{
+	width : 100%;
+}
 #zonCiblSub {
 	background-color:lightGrey;
 	height: 150px;
 	width: 45%;
 	overflow-y: scroll;
+}
+#iTable{
+	width: 100%;
 }
 
 #zonCiblBook {

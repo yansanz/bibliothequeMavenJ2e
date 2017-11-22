@@ -248,7 +248,7 @@ public class DaoImpl implements IDao {
 
 			String query = "select _livre.ISBN , _livre.Titre_livre, _livre.Sous_titre,_livre.Nbre_exemplaire, _livre.nom_collection,personne.nom, personne.prenom, _auteur.Annee_naissance "
 					+ "from _auteur,_livre, _ecrit,personne where _auteur.id_personne = personne.id_personne and _ecrit.id_personne = personne.id_personne\r\n"
-					+ " and _livre.ISBN= _ecrit.ISBN and _livre.Titre_livre = '" + name + "'order by _livre.Titre_livre;";
+					+ " and _livre.ISBN= _ecrit.ISBN and _livre.Titre_livre like '%" + name + "%';";
 			result = statement.executeQuery(query);
 			ArrayList<Book> livre = new ArrayList<Book>();
 			while (result.next()) {

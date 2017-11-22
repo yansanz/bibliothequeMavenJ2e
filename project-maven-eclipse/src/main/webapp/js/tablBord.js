@@ -28,7 +28,7 @@ window.onclick = function(event) {
 }
 
 var requete;
-
+//function AJAX envoie requete
 function rechercheDonnee(){
 	var donnees = document.getElementById("donnees");
 	var url = "search?valeur=" +escape(donnees.value);
@@ -49,12 +49,13 @@ function rechercheDonnee(){
 		
 	}
 }
-// function AJAX 
+// function AJAX retour requete
 function majIHM(){
 	
 	if (requete.readyState == 4) {
 		
 		if (requete.status == 200) {
+			console.log(requete.responseText)
 			var reponse = JSON.parse(requete.responseText);
 			var select = document.getElementById('tableSub');
 			if (reponse.length !=0){
@@ -132,10 +133,78 @@ function modeSub() {
 	document.getElementById('zonRech').style.visibility = "hidden";
 	document.getElementById('zonRechSub').style.visibility = "visible";
 }
-function rechTitre() {
 
+//AJAX rechTitle
+var xhr_object = null;
+function rechTitre() {
 	boxG.value = "";
 	boxA.value = "";
+	var donneesTitre = document.getElementById("txtTitre");
+	var urlT = "Acceuil/searchTitle?valeur=" +escape(donneesTitre.value);
+	if (window.XMLHttpRequest) // Firefox
+	{
+		xhr_object = new XMLHttpRequest();
+		xhr_object.open("GET",urlT,true);
+		xhr_object.onreadystatechange = majTitle;
+		xhr_object.send(null);
+	}else if (window.ActiveXObject) // Internet explorer
+	{
+		xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+		if(xhr_object){
+			xhr_object.open("GET",urlT,true);
+			xhr_object.onreadystatechange = majIHMTitle;
+			xhr_object.send();
+		}
+		}else{
+			alert("le navigateur ne supporte pas cette techno")
+		
+	}
+}
+function majTitle(){
+
+if (xhr_object.readyState == 4) {
+	if (xhr_object.status == 200) {
+		console.log(xhr_object.responseText);
+		var reponse = JSON.parse(xhr_object.responseText);
+		console.log(reponse);
+		var tableBook = document.getElementById('bookTable');
+		if (reponse.length !=0){
+			document.getElementById('TableBook').style.visibility ='hidden';
+			tableBook.innerHTML="";
+		for (var i = 0; i < reponse.length; i++){
+		      var rowT = document.createElement('tr');
+		      var tdTitle = document.createElement('td');
+		      var tdSubTitle =   document.createElement('td');
+		      var tdAuthor   = document.createElement('td');
+		      var tdGenre = document.createElement('td');
+		      var tdRadioButton = document.createElement('td');
+			      var radioInput = document.createElement('input');
+		      radioInput.setAttribute('type','radio');
+		      radioInput.setAttribute('name','choixBook');
+		      radioInput.setAttribute('value',reponse[i].isbn);
+		      radioInput.setAttribute('onchange','getIsbn('+reponse[i].isbn+')');
+		         tdRadioButton.appendChild(radioInput);
+		         rowT.appendChild(tdRadioButton);
+		         rowT.appendChild(tdTitle);
+		      tdTitle.innerHTML = reponse[i].title;
+		      rowT.appendChild(tdSubTitle);
+	      tdSubTitle.innerHTML = reponse[i].subtitle;
+	      rowT.appendChild(tdSubTitle);
+	      tdAuthor.innerHTML = reponse[i].author.lastName;
+	      rowT.appendChild(tdAuthor);
+	      tdGenre.innerHTML = reponse[i].genre;
+	      rowT.appendChild(tdGenre);
+	      rowT.value = reponse[i].isbn;
+	      tableBook.appendChild(rowT);
+		}
+		}else{
+			document.getElementById('iTableBook').style.visibility ='visible';
+		}
+	} else {
+	alert('Une erreur est survenue lors de la mise à jour de la page.'+
+	'\n\nCode retour = '+ xhr_object.statusText);   
+	}
+}
 }
 function rechGenre() {
 	boxA.value = "";

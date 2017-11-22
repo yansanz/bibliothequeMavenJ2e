@@ -35,7 +35,7 @@
 					method="get">
 					<input id="txtTitre" placeholder="titre" name="txtTitre" value=""
 						type="text" size="20"
-						onchange="rechTitre();document.retour.submit()"> <select
+						onkeyup="rechTitre();"> <select
 						id="boxG" name="genre"
 						onchange="rechGenre();document.retour.submit()">
 						<option>Genre</option>

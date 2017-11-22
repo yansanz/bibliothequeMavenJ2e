@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<table border="1">
+<table border="1" id="iTablCopy">
 	<c:forEach var="myBook" items="${exemplaire}">
 		<tr>
 			<td><c:out value="${myBook.isbn}" /></td>

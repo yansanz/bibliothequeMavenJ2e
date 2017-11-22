@@ -84,25 +84,42 @@ public class AppTablBord extends HttpServlet {
 			LibrairieG(request, response);
 		} else if (action.equals("/search")) {
 			librairieS(request, response);
+		} else if (action.equals("/searchTitle")) {
+			TableTitle(request, response);
 		}
 	}
 
-	private void librairieS(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void TableTitle(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// TODO Auto-generated method stub
+		String rechercheTitre = request.getParameter("valeur");
+		ArrayList<Book> bk = service.RechTitreExact(rechercheTitre);
+		ObjectMapper oMapper = new ObjectMapper();
+		oMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		String retourJSon = oMapper.writeValueAsString(bk);
+		System.out.println(retourJSon);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(retourJSon);
+
+	}
+
+	private void librairieS(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		String rechercheNom = request.getParameter("valeur");
 		ArrayList<Subscriber> sub = service.recherchNom(rechercheNom);
 		ObjectMapper objectMapper = new ObjectMapper();
-        // Set pretty printing of json
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        // 1. Convert List of Person objects to JSON
-        String arrayJson = objectMapper.writeValueAsString(sub);
-        // System.out.println("1. Convert List of Book objects to JSON :");
-        System.out.println(arrayJson);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(arrayJson);
-		
-//		getServletContext().getRequestDispatcher("/WEB-INF/views/Librairie.jsp").forward(request, response);
+		// Set pretty printing of json
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		// 1. Convert List of Person objects to JSON
+		String arrayJson = objectMapper.writeValueAsString(sub);
+		// System.out.println("1. Convert List of Book objects to JSON :");
+		System.out.println(arrayJson);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(arrayJson);
+
 	}
 
 	private void LibrairieG(HttpServletRequest request, HttpServletResponse response)
@@ -134,14 +151,14 @@ public class AppTablBord extends HttpServlet {
 	private void ReturnInfoCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		if(request.getParameter("txtCibl13").equals("")) {
+		if (request.getParameter("txtCibl13").equals("")) {
 			request.setAttribute("infoBul", "operation impossible");
-			
-		}else {
-		int idCopy = Integer.valueOf(request.getParameter("txtCibl13")).intValue();
-	Subscriber s = service.getSubExemplaire(idCopy);
-	int idClient = s.getId();
-		service.Restitue(idCopy, idClient);
+
+		} else {
+			int idCopy = Integer.valueOf(request.getParameter("txtCibl13")).intValue();
+			Subscriber s = service.getSubExemplaire(idCopy);
+			int idClient = s.getId();
+			service.Restitue(idCopy, idClient);
 		}
 		TablBord(request, response);
 
@@ -173,11 +190,15 @@ public class AppTablBord extends HttpServlet {
 	private void suprCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		if(request.getParameter("txtCibl7").equals("")) {
+			request.setAttribute("infoBul", "choisir un exemplaire a supprimer");
+		}else {
 		int idCopy = Integer.valueOf(request.getParameter("txtCibl7")).intValue();
 		if (service.dispoCopy(idCopy)) {
 			service.modifCopy(idCopy);
 		} else {
 			request.setAttribute("infoBul", "exemplaire a restituer avant suppression");
+		}
 		}
 		TablBord(request, response);
 
@@ -198,10 +219,10 @@ public class AppTablBord extends HttpServlet {
 		int idClient = Integer.valueOf(request.getParameter("txtCibl8")).intValue();
 		String isbn = service.getIsbn(idCopy);
 		if (service.getNbreEmprunt(idClient)) {
-		service.Emprunte(isbn, idCopy, idClient);
-		Subscriber s = service.getOneEmprunteur(idClient);
-		request.setAttribute("infoBul", "Emprunt Ok : " + s.getLastName());
-		}else {
+			service.Emprunte(isbn, idCopy, idClient);
+			Subscriber s = service.getOneEmprunteur(idClient);
+			request.setAttribute("infoBul", "Emprunt Ok : " + s.getLastName());
+		} else {
 			request.setAttribute("infoBul", "nbre maxi emprunt deja atteint");
 		}
 		TablBord(request, response);
@@ -237,24 +258,25 @@ public class AppTablBord extends HttpServlet {
 	private void emprunt(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		if (request.getParameter("txtCibl2").equals("")|| request.getParameter("txtCibl1").equals("")) {
+		if (request.getParameter("txtCibl2").equals("") || request.getParameter("txtCibl1").equals("")) {
 			librairie(request, response);
-		}else {
-		int id = Integer.valueOf(request.getParameter("txtCibl2")).intValue();
-		String isbn = request.getParameter("txtCibl1");
-		
-		ArrayList<Copy> exemplaire = service.getCopy(isbn);
+		} else {
+			int id = Integer.valueOf(request.getParameter("txtCibl2")).intValue();
+			String isbn = request.getParameter("txtCibl1");
 
-		Subscriber s = service.getOneEmprunteur(id);
-		System.out.println(s.getFisrtName() + "test app");
-		String lastName = s.getLastName();
-		String fisrtName = s.getFisrtName();
-		request.setAttribute("modeEmpr", id);
-		request.setAttribute("id", id);
-		request.setAttribute("infoBul", fisrtName + " " + lastName + " a deja: "+ service.getNbreExactEmpruntparSub(id)+" emprunts en cours");
-		request.setAttribute("exemplaire", exemplaire);
-		
-		getServletContext().getRequestDispatcher("/WEB-INF/views/Librairie.jsp").forward(request, response);
+			ArrayList<Copy> exemplaire = service.getCopy(isbn);
+
+			Subscriber s = service.getOneEmprunteur(id);
+			System.out.println(s.getFisrtName() + "test app");
+			String lastName = s.getLastName();
+			String fisrtName = s.getFisrtName();
+			request.setAttribute("modeEmpr", id);
+			request.setAttribute("id", id);
+			request.setAttribute("infoBul", fisrtName + " " + lastName + " a deja: "
+					+ service.getNbreExactEmpruntparSub(id) + " emprunts en cours");
+			request.setAttribute("exemplaire", exemplaire);
+
+			getServletContext().getRequestDispatcher("/WEB-INF/views/Librairie.jsp").forward(request, response);
 		}
 	}
 
@@ -468,8 +490,9 @@ public class AppTablBord extends HttpServlet {
 				String lastName = s.getLastName();
 				String fisrtName = s.getFisrtName();
 				request.setAttribute("idSub", s.getId());
-				request.setAttribute("infoBul", fisrtName + " " + lastName +" a "+service.getNbreExactEmpruntparSub(id) + " emprunts en cours");
-				
+				request.setAttribute("infoBul", fisrtName + " " + lastName + " a "
+						+ service.getNbreExactEmpruntparSub(id) + " emprunts en cours");
+
 			}
 
 			request.setAttribute("exemplaire", livre);
