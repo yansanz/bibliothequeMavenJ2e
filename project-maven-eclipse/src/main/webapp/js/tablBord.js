@@ -67,11 +67,12 @@ function majIHM(){
 			      var tdFirstName =   document.createElement('td');
 			      var tdEmprunt   = document.createElement('td');
 			      var tdRadioButton = document.createElement('td');
+			      tdRadioButton.setAttribute('class','tdButton');
   			      var radioInput = document.createElement('input');
 			      radioInput.setAttribute('type','radio');
 			      radioInput.setAttribute('name','choixSub');
 			      radioInput.setAttribute('value',reponse[i].id);
-			      radioInput.setAttribute('onchange','getId('+reponse[i].id+')');
+			      radioInput.setAttribute('onchange','getId('+reponse[i].id+');highLight(this)');
 			         tdRadioButton.appendChild(radioInput);
 			      opt.appendChild(tdRadioButton);
 			      opt.appendChild(tdLastName);
@@ -161,7 +162,6 @@ function rechTitre() {
 	}
 }
 function majTitle(){
-
 if (xhr_object.readyState == 4) {
 	if (xhr_object.status == 200) {
 		console.log(xhr_object.responseText);
@@ -178,11 +178,14 @@ if (xhr_object.readyState == 4) {
 		      var tdAuthor   = document.createElement('td');
 		      var tdGenre = document.createElement('td');
 		      var tdRadioButton = document.createElement('td');
+		      tdRadioButton.setAttribute('class',tdButton2);
+		    
 			      var radioInput = document.createElement('input');
 		      radioInput.setAttribute('type','radio');
 		      radioInput.setAttribute('name','choixBook');
 		      radioInput.setAttribute('value',reponse[i].isbn);
 		      radioInput.setAttribute('onchange','getIsbn('+reponse[i].isbn+')');
+		      radioInput.setAttribute('onchange','highLight2(this)');
 		         tdRadioButton.appendChild(radioInput);
 		         rowT.appendChild(tdRadioButton);
 		         rowT.appendChild(tdTitle);
@@ -205,6 +208,29 @@ if (xhr_object.readyState == 4) {
 	'\n\nCode retour = '+ xhr_object.statusText);   
 	}
 }
+}
+
+function highLight(e){
+	var x = document.getElementsByClassName("tdButton");
+	// reinitialise affichage
+	for( var i=0; i<x.length;i++){
+	x[i].style.backgroundColor = "lightYellow";
+	}
+	// Get parent of e
+	var parent = e.parentNode;
+	// Change css style of parent of e
+	parent.style.backgroundColor = "lightBlue";
+}
+function highLight2(f){
+	var x = document.getElementsByClassName("tdButton2");
+	// reinitialise affichage
+	for( var i=0; i<x.length;i++){
+	x[i].style.backgroundColor = "lightYellow";
+	}
+	// Get parent of f
+	var parent = f.parentNode;
+	// Change css style of parent of e
+	parent.style.backgroundColor = "lightBlue";
 }
 function rechGenre() {
 	boxA.value = "";

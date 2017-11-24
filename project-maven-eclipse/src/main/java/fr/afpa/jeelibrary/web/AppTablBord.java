@@ -167,8 +167,12 @@ public class AppTablBord extends HttpServlet {
 	private void infoValid(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		if (request.getParameter("txtCibl10").equals("")&& request.getParameter("txtCibl11").equals("")) {
+			request.setAttribute("infoBul","operation impossible");
+		}else {
 		int idCopy = Integer.valueOf(request.getParameter("txtCibl10")).intValue();
 		String isbn = request.getParameter("txtCibl11");
+		
 		ArrayList<Copy> exemplaire = new ArrayList<Copy>();
 		exemplaire = service.getCopy(isbn);
 		Subscriber s = service.getSubExemplaire(idCopy);
@@ -183,15 +187,16 @@ public class AppTablBord extends HttpServlet {
 			request.setAttribute("infoBul", "R.A.S");
 			request.setAttribute("exemplaire", exemplaire);
 		}
+		}
 		TablBord(request, response);
-
+		
 	}
 
 	private void suprCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		if(request.getParameter("txtCibl7").equals("")) {
-			request.setAttribute("infoBul", "choisir un exemplaire a supprimer");
+			request.setAttribute("infoBul", "operation impossible");
 		}else {
 		int idCopy = Integer.valueOf(request.getParameter("txtCibl7")).intValue();
 		if (service.dispoCopy(idCopy)) {
@@ -207,8 +212,12 @@ public class AppTablBord extends HttpServlet {
 	private void addCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		if( request.getParameter("txtCibl9").equals("")){
+			request.setAttribute("infoBul", "operation impossible");
+		}else {
 		String isbn = request.getParameter("txtCibl9");
 		service.addCopy(isbn);
+		}
 		TablBord(request, response);
 	}
 
@@ -284,9 +293,16 @@ public class AppTablBord extends HttpServlet {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		ArrayList<Subscriber> sub = new ArrayList<Subscriber>();
+		ArrayList<Book> exemplaire = new ArrayList<Book>();
 		ArrayList<Book> livre = new ArrayList<Book>();
 		sub = service.getAllSub();
-		livre = service.RechTitre();
+		exemplaire = service.RechTitre();
+		for (int i = 0;i< exemplaire.size() ;i++) {
+			if (service.dispoLivre(exemplaire.get(i).getIsbn())) {
+			Book b =  service.RechIsbn(exemplaire.get(i).getIsbn());
+			livre.add(b);
+		}
+		}
 		request.setAttribute("emprunteur", sub);
 		request.setAttribute("livre", livre);
 		request.setAttribute("infoBul", "selectionner 1 emprunteur et 1 exemplaire pour l'emprunt ");

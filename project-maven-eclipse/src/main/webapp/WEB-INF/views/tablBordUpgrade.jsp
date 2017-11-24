@@ -17,13 +17,12 @@
 		<fieldset id="tb">
 			<div id="btnMode">
 				<a
-					href="<c:url value ="/Acceuil/Librairie"/>"><input id="btnSub" class="btn" type="button" value="Mode Emprunteur"
-					onclick="modeSub()"></a>
+					href="<c:url value ="/Acceuil"/>"><input id="btnSub" class="btn" type="button" value="Acceuil"
+					></a>
 					 <a
 					href="<c:url value ="/Acceuil/Librairie"/>"><input id="btnLib"
 					class="btn" type="button" value="Mode Librairie"></a>
-				<input id="btnBook" class="btn" type="button" value="Mode Book"
-					onclick="modeBook()">
+				
 				<fieldset id="zoneInfo">
 					<legend id="legend">INFO</legend>
 					${infoBul}

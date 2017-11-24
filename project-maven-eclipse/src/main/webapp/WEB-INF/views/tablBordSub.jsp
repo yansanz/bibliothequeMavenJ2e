@@ -8,8 +8,8 @@
 <table border="1" id="iTable">
 	<c:forEach var="mySub" items="${emprunteur}">
 		<tr>
-		<td><input onchange="getId(${mySub.id})" type="radio"
-				id="iChoixSub" name="choixSub" value="${mySub.id}"></td>
+		<td class="tdButton" ><input onchange="getId(${mySub.id});highLight(this);" type="radio"
+				id="iChoixSub${mySub.id}" name="choixSub" value="${mySub.id}"></td>
 			<td><c:out value="${mySub.lastName}" /></td>
 			<td><c:out value="${mySub.fisrtName}" /></td>
 			<td><c:set var="emprunt" /> <c:if test="${mySub.nbrEmprunt > 0}">
