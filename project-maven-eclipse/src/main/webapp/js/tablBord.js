@@ -178,14 +178,13 @@ if (xhr_object.readyState == 4) {
 		      var tdAuthor   = document.createElement('td');
 		      var tdGenre = document.createElement('td');
 		      var tdRadioButton = document.createElement('td');
-		      tdRadioButton.setAttribute('class',tdButton2);
+		      tdRadioButton.setAttribute('class','tdButton2');
 		    
 			      var radioInput = document.createElement('input');
 		      radioInput.setAttribute('type','radio');
 		      radioInput.setAttribute('name','choixBook');
 		      radioInput.setAttribute('value',reponse[i].isbn);
-		      radioInput.setAttribute('onchange','getIsbn('+reponse[i].isbn+')');
-		      radioInput.setAttribute('onchange','highLight2(this)');
+		      radioInput.setAttribute('onchange','getIsbn('+reponse[i].isbn+');highLight2(this)');
 		         tdRadioButton.appendChild(radioInput);
 		         rowT.appendChild(tdRadioButton);
 		         rowT.appendChild(tdTitle);
