@@ -282,9 +282,51 @@ th {
 td {
 	padding: 10px;
 	text-align: center;
-	background-color: lightGrey;
+	background-color: rgba(0, 0, 255, 0.1);
 }
+.tdButton{
+	background-color: lightYellow;
+}
+.tdButton:hover{
+	cursor: pointer;
+	background-color: rgba(0, 0, 255, 0.1);
+}
+input[type='radio'] {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        outline: none;
+        border: 3px solid lightBlue;
+    }
 
+    input[type='radio']:before {
+        content: '';
+        display: block;
+        width: 60%;
+        height: 60%;
+        margin: 20% auto;
+        border-radius: 50%;
+    }
+#a-opt + label{
+	border-color: grey; color: grey;
+}
+#b-opt + label{
+	border-color: grey;color: grey;
+}
+#a-opt + label:hover{
+	border-color: black; color: black; font-weight: bold;
+}
+#b-opt + label:hover{
+	border-color: black; color: black;font-weight: bold;
+}
+input[type="radio"]:checked:before{
+	background: rgba(0, 0, 255, 0.1);
+}
+input[type="radio"]:checked {
+	border-color:lightYellow;
+	background : lightYellow;
+}
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */

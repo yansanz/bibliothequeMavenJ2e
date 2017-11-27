@@ -16,7 +16,7 @@
 			<td><c:out value="${myBook.subtitle}" /></td>
 			<td><c:out value="${myBook.author}" /></td>
 			<td><c:out value="${myBook.genre}" /></td>
-			<td><input onchange="getIsbn(${myBook.isbn})" type="radio"
+			<td class="tdButton2"><input onchange="getIsbn(${myBook.isbn});highLight2(this);" type="radio"
 				id="iChoix" name="choixBook" value="${myBook.isbn}">
 		</tr>
 	</c:forEach>

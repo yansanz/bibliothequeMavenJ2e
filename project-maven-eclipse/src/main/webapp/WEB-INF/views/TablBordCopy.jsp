@@ -13,7 +13,7 @@
 				</c:if> <c:if test="${myBook.dispo == 0}">
 					<c:out value="emprunt en cours" />
 				</c:if></td>
-			<td><input onchange="getIdCopy(${myBook.numCopy})" type="radio"
+			<td class="tdButton"><input onchange="getIdCopy(${myBook.numCopy});highLight(this);" type="radio"
 				id="iChoixCopy" name="choix" value="${myBook.numCopy}">
 		</tr>
 	</c:forEach>
