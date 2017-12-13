@@ -89,6 +89,16 @@ public class AppTablBord extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Looks up for books by title
+	 * 
+	 * @param request
+	 *            the request object
+	 * @param response
+	 *            the response object
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void TableTitle(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
@@ -104,6 +114,13 @@ public class AppTablBord extends HttpServlet {
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void librairieS(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
@@ -148,62 +165,81 @@ public class AppTablBord extends HttpServlet {
 		getServletContext().getRequestDispatcher("/WEB-INF/views/Librairie.jsp").forward(request, response);
 	}
 
+	/**
+	 * Allows returning of a copy.
+	 * @param request
+	 *            the request object
+	 * @param response
+	 *            the response object
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void ReturnInfoCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		if (request.getParameter("txtCibl13").equals("")) {
 			request.setAttribute("infoBul", "operation impossible");
 
 		} else {
 			int idCopy = Integer.valueOf(request.getParameter("txtCibl13")).intValue();
 			Subscriber s = service.getSubExemplaire(idCopy);
-			int idClient = s.getId();
-			service.Restitue(idCopy, idClient);
+			if (s == null) {
+				request.setAttribute("infoBul", "Les infos abonné n'ont pu être récupérées.");
+			} else {
+				int idClient = s.getId();
+				service.Restitue(idCopy, idClient);
+				// TODO code written by DMA
+				//service.returnCopy(idCopy);
+			}
 		}
 		TablBord(request, response);
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void infoValid(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		if (request.getParameter("txtCibl10").equals("")&& request.getParameter("txtCibl11").equals("")) {
-			request.setAttribute("infoBul","operation impossible");
-		}else {
-		int idCopy = Integer.valueOf(request.getParameter("txtCibl10")).intValue();
-		String isbn = request.getParameter("txtCibl11");
-		
-		ArrayList<Copy> exemplaire = new ArrayList<Copy>();
-		exemplaire = service.getCopy(isbn);
-		Subscriber s = service.getSubExemplaire(idCopy);
-		request.setAttribute("isbnInfo", isbn);
-		request.setAttribute("modeInf", isbn);
-		if (s != null) {
-			request.setAttribute("idSub", s.getId());
-			request.setAttribute("infoBul",
-					s.getFisrtName() + " " + s.getLastName() + " a emprunté l'exemplaire N°" + idCopy);
-			request.setAttribute("exemplaire", exemplaire);
+		if (request.getParameter("txtCibl10").equals("") && request.getParameter("txtCibl11").equals("")) {
+			request.setAttribute("infoBul", "operation impossible");
 		} else {
-			request.setAttribute("infoBul", "R.A.S");
-			request.setAttribute("exemplaire", exemplaire);
-		}
+			int idCopy = Integer.valueOf(request.getParameter("txtCibl10")).intValue();
+			String isbn = request.getParameter("txtCibl11");
+
+			ArrayList<Copy> exemplaire = new ArrayList<Copy>();
+			exemplaire = service.getCopy(isbn);
+			Subscriber s = service.getSubExemplaire(idCopy);
+			request.setAttribute("isbnInfo", isbn);
+			request.setAttribute("modeInf", isbn);
+			if (s != null) {
+				request.setAttribute("idSub", s.getId());
+				request.setAttribute("infoBul",
+						s.getFisrtName() + " " + s.getLastName() + " a emprunté l'exemplaire N°" + idCopy);
+				request.setAttribute("exemplaire", exemplaire);
+			} else {
+				request.setAttribute("infoBul", "R.A.S");
+				request.setAttribute("exemplaire", exemplaire);
+			}
 		}
 		TablBord(request, response);
-		
+
 	}
 
 	private void suprCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		if(request.getParameter("txtCibl7").equals("")) {
+		if (request.getParameter("txtCibl7").equals("")) {
 			request.setAttribute("infoBul", "operation impossible");
-		}else {
-		int idCopy = Integer.valueOf(request.getParameter("txtCibl7")).intValue();
-		if (service.dispoCopy(idCopy)) {
-			service.modifCopy(idCopy);
 		} else {
-			request.setAttribute("infoBul", "exemplaire a restituer avant suppression");
-		}
+			int idCopy = Integer.valueOf(request.getParameter("txtCibl7")).intValue();
+			if (service.dispoCopy(idCopy)) {
+				service.modifCopy(idCopy);
+			} else {
+				request.setAttribute("infoBul", "exemplaire a restituer avant suppression");
+			}
 		}
 		TablBord(request, response);
 
@@ -212,11 +248,11 @@ public class AppTablBord extends HttpServlet {
 	private void addCopy(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		if( request.getParameter("txtCibl9").equals("")){
+		if (request.getParameter("txtCibl9").equals("")) {
 			request.setAttribute("infoBul", "operation impossible");
-		}else {
-		String isbn = request.getParameter("txtCibl9");
-		service.addCopy(isbn);
+		} else {
+			String isbn = request.getParameter("txtCibl9");
+			service.addCopy(isbn);
 		}
 		TablBord(request, response);
 	}
@@ -239,7 +275,6 @@ public class AppTablBord extends HttpServlet {
 
 	private void retourValid(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		int idCopy = Integer.valueOf(request.getParameter("txtCibl5")).intValue();
 		int idClient = Integer.valueOf(request.getParameter("txtCibl6")).intValue();
 		service.Restitue(idCopy, idClient);
@@ -249,7 +284,6 @@ public class AppTablBord extends HttpServlet {
 	}
 
 	private void retour(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		int id = Integer.valueOf(request.getParameter("txtCibl4")).intValue();
 		ArrayList<Copy> exemplaire = new ArrayList<Copy>();
 		Subscriber s = service.getOneEmprunteur(id);
@@ -266,7 +300,6 @@ public class AppTablBord extends HttpServlet {
 
 	private void emprunt(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		if (request.getParameter("txtCibl2").equals("") || request.getParameter("txtCibl1").equals("")) {
 			librairie(request, response);
 		} else {
@@ -291,17 +324,16 @@ public class AppTablBord extends HttpServlet {
 
 	private void librairie(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		ArrayList<Subscriber> sub = new ArrayList<Subscriber>();
 		ArrayList<Book> exemplaire = new ArrayList<Book>();
 		ArrayList<Book> livre = new ArrayList<Book>();
 		sub = service.getAllSub();
 		exemplaire = service.RechTitre();
-		for (int i = 0;i< exemplaire.size() ;i++) {
+		for (int i = 0; i < exemplaire.size(); i++) {
 			if (service.dispoLivre(exemplaire.get(i).getIsbn())) {
-			Book b =  service.RechIsbn(exemplaire.get(i).getIsbn());
-			livre.add(b);
-		}
+				Book b = service.RechIsbn(exemplaire.get(i).getIsbn());
+				livre.add(b);
+			}
 		}
 		request.setAttribute("emprunteur", sub);
 		request.setAttribute("livre", livre);
@@ -311,7 +343,6 @@ public class AppTablBord extends HttpServlet {
 	}
 
 	private void addSub(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		String nomProvisoire = request.getParameter("txtNom");
 		String nom = nomProvisoire.replaceFirst(".", (nomProvisoire.charAt(0) + "").toUpperCase());
 		String prenomProvisoire = request.getParameter("txtPrenom");
@@ -350,14 +381,11 @@ public class AppTablBord extends HttpServlet {
 			b = new Book(isbn, titre, ssTitre, a, genre, nbCopy);
 			service.ajouterLivreAuteurExistant(b);
 		}
-
-		System.out.println("test" + b + a);
 		TablBord(request, response);
 
 	}
 
 	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		String isbn = request.getParameter("txtCibl7");
 		if (isbn.equals("book")) {
 			ArrayList<Catalog> catalog = service.getCatalog();
@@ -367,14 +395,12 @@ public class AppTablBord extends HttpServlet {
 			request.setAttribute("nbCopy", isbn);
 		} else {
 			request.setAttribute("modeSub", isbn);
-			System.out.println("test sub");
 		}
 		getServletContext().getRequestDispatcher("/WEB-INF/views/tablBordUpgrade.jsp").forward(request, response);
 	}
 
 	private void modifBook(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		Author a = null;
 		String isbn = request.getParameter("txtIsbn");
 		String titre = request.getParameter("txtTitre");
@@ -403,7 +429,6 @@ public class AppTablBord extends HttpServlet {
 
 	private void supression(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		if (request.getParameter("txtCibl5").equals("") && request.getParameter("txtCibl6").equals("")) {
 			request.setAttribute("infoBul", "selectionner un livre ou un emprunteur");
 		} else {
